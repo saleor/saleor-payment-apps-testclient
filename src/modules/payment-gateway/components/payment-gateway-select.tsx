@@ -73,6 +73,7 @@ export const PaymentGatewaySelect = (props: {
         });
       }
       case "app.saleor.adyen_staging":
+      case "app.saleor.adyen_preview":
       case "app.saleor.adyen": {
         toast({
           title: "Payment gateway selected",
