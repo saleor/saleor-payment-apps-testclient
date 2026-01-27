@@ -5,6 +5,7 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import type { StripePaymentElementChangeEvent } from "@stripe/stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 
@@ -52,9 +53,18 @@ export const StripeCheckoutFormWrapped = (props: {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const [paymentMethodType, setPaymentMethodType] = useState<string | null>(
+    null,
+  );
 
   const { mutateAsync: transactionInitialize } =
     useTransactionInitializeMutation();
+
+  const handlePaymentElementChange = (
+    event: StripePaymentElementChangeEvent,
+  ) => {
+    setPaymentMethodType(event.value.type);
+  };
 
   const handleSubmit = async (event: any) => {
     if (!stripe) {
@@ -81,7 +91,11 @@ export const StripeCheckoutFormWrapped = (props: {
 
     setLoading(true);
 
-    if (!selectedPaymentMethod) {
+    // Use selectedPaymentMethod from submit, or fall back to tracked type from onChange
+    // This handles Stripe Link which doesn't return selectedPaymentMethod from submit()
+    const resolvedPaymentMethod = selectedPaymentMethod || paymentMethodType;
+
+    if (!resolvedPaymentMethod) {
       setLoading(false);
       toast({
         variant: "destructive",
@@ -94,7 +108,7 @@ export const StripeCheckoutFormWrapped = (props: {
     const transactionInitializeResult = await transactionInitialize({
       data: {
         paymentIntent: {
-          paymentMethod: selectedPaymentMethod,
+          paymentMethod: resolvedPaymentMethod,
         },
       },
       saleorAmount: props.saleorAmount,
@@ -163,7 +177,7 @@ export const StripeCheckoutFormWrapped = (props: {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <PaymentElement />
+      <PaymentElement onChange={handlePaymentElementChange} />
       <div className="flex justify-stretch">
         <FormButton
           type="submit"
