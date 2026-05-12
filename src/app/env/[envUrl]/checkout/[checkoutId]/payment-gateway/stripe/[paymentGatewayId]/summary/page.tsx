@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 import { FullScreenLoader } from "@/components/full-screen-loader";
 import { readFragment } from "@/graphql/gql";
@@ -11,11 +12,13 @@ import { CheckoutFragment } from "@/modules/summary/fragments";
 
 const CheckoutSummaryPageError = BaseError.subclass("CheckoutSummaryPageError");
 
-export default function CheckoutSummaryPage({
-  params: { envUrl },
-}: {
-  params: { envUrl: string; checkoutId: string; paymentGatewayId: string };
-}) {
+export default function CheckoutSummaryPage() {
+  const { envUrl } = useParams<{
+    envUrl: string;
+    checkoutId: string;
+    paymentGatewayId: string;
+  }>();
+
   const decodedEnvUrl = decodeURIComponent(envUrl);
 
   const {

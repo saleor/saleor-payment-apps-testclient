@@ -2,9 +2,9 @@ import { getPaymentGateways } from "@/modules/payment-gateway/actions/get-paymen
 import { PaymentGatewaySelect } from "@/modules/payment-gateway/components/payment-gateway-select";
 
 export default async function PaymentGatewaysPage(props: {
-  params: { envUrl: string; checkoutId: string };
+  params: Promise<{ envUrl: string; checkoutId: string }>;
 }) {
-  const { envUrl, checkoutId } = props.params;
+  const { envUrl, checkoutId } = await props.params;
 
   const decodedEnvUrl = decodeURIComponent(envUrl);
 

@@ -8,10 +8,16 @@ import { AdyenDropin } from "@/modules/dropin/components/adyen-dropin";
 const PaymentGatewayError = BaseError.subclass("PaymentGatewayError");
 
 export default async function PaymentGatewayPage({
-  params: { envUrl, checkoutId, paymentGatewayId },
+  params,
 }: {
-  params: { envUrl: string; checkoutId: string; paymentGatewayId: string };
+  params: Promise<{
+    envUrl: string;
+    checkoutId: string;
+    paymentGatewayId: string;
+  }>;
 }) {
+  const { envUrl, checkoutId, paymentGatewayId } = await params;
+
   const decodedEnvUrl = decodeURIComponent(envUrl);
   const decodedPaymentGatewayId = decodeURIComponent(paymentGatewayId);
 

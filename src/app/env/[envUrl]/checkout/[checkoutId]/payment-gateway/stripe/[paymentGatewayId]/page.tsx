@@ -1,5 +1,6 @@
 "use client";
 import { readFragment } from "gql.tada";
+import { useParams } from "next/navigation";
 
 import { FullScreenLoader } from "@/components/full-screen-loader";
 import { TotalPriceFragment } from "@/graphql/fragments";
@@ -7,11 +8,13 @@ import { BaseError } from "@/lib/errors";
 import { StripeCheckoutForm } from "@/modules/stripe/components/stripe-checkout-form";
 import { useStripeDropinQuery } from "@/modules/stripe/use-stripe-dropin-query";
 
-export default function StripeDropinPage({
-  params: { envUrl, checkoutId, paymentGatewayId },
-}: {
-  params: { envUrl: string; checkoutId: string; paymentGatewayId: string };
-}) {
+export default function StripeDropinPage() {
+  const { envUrl, checkoutId, paymentGatewayId } = useParams<{
+    envUrl: string;
+    checkoutId: string;
+    paymentGatewayId: string;
+  }>();
+
   const decodedEnvUrl = decodeURIComponent(envUrl);
   const decodedPaymentGatewayId = decodeURIComponent(paymentGatewayId);
 

@@ -9,10 +9,11 @@ import { CheckoutFragment } from "@/modules/summary/fragments";
 const CheckoutSummaryPageError = BaseError.subclass("CheckoutSummaryPageError");
 
 export default async function CheckoutSummaryPage({
-  params: { envUrl, checkoutId },
+  params,
 }: {
-  params: { envUrl: string; checkoutId: string };
+  params: Promise<{ envUrl: string; checkoutId: string }>;
 }) {
+  const { envUrl, checkoutId } = await params;
   const decodedEnvUrl = decodeURIComponent(envUrl);
   const checkoutSummaryDataResponse = await getCheckoutSummary({
     envUrl: decodedEnvUrl,
