@@ -4,9 +4,9 @@ import { DeliveryMethod } from "@/modules/checkout-details/components/delivery-m
 import { Shipping } from "@/modules/checkout-details/components/shipping";
 
 export default async function CheckoutDetailsPage(props: {
-  params: { envUrl: string; checkoutId: string };
+  params: Promise<{ envUrl: string; checkoutId: string }>;
 }) {
-  const { envUrl, checkoutId } = props.params;
+  const { envUrl, checkoutId } = await props.params;
   const decodedEnvUrl = decodeURIComponent(envUrl);
 
   const checkoutDetailsResponse = await getCheckoutDetails({
