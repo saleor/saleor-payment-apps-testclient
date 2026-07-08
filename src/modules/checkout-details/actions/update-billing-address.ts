@@ -54,6 +54,7 @@ export const updateBillingAddress = actionClient
       checkoutId,
       input: billingAddress,
     }).catch((error) => {
+      // eslint-disable-next-line no-console
       console.error("Failed to update billing address", { error });
       throw BaseError.normalize(error, UnknownError);
     });

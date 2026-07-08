@@ -19,6 +19,7 @@ export const getCheckoutTotalPrice = actionClient
     const response = await request(envUrl, GetCheckoutTotalPriceQuery, {
       checkoutId,
     }).catch((error) => {
+      // eslint-disable-next-line no-console
       console.error("Failed to get checkout total", { error });
       throw BaseError.normalize(error, UnknownError);
     });
