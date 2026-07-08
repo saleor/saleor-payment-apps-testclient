@@ -89,6 +89,7 @@ export const initalizePaymentGateway = actionClient
         amount,
         data,
       }).catch((error) => {
+        console.error("Failed to fetch payment", { error });
         throw BaseError.normalize(error, UnknownError);
       });
 

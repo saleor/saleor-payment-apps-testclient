@@ -24,10 +24,7 @@ const UpdateShippingAddressSchema = z.object({
 
 const UpdateShippingAddressMutation = graphql(`
   mutation updateShippingAddress($checkoutId: ID!, $input: AddressInput!) {
-    checkoutShippingAddressUpdate(
-      checkoutId: $checkoutId
-      shippingAddress: $input
-    ) {
+    checkoutShippingAddressUpdate(id: $checkoutId, shippingAddress: $input) {
       errors {
         field
         message
