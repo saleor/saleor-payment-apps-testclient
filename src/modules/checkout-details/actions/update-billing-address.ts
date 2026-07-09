@@ -24,10 +24,7 @@ const UpdateBillingAddressSchema = z.object({
 
 const UpdateBillingAddressMutation = graphql(`
   mutation updateBillingAddress($checkoutId: ID!, $input: AddressInput!) {
-    checkoutBillingAddressUpdate(
-      checkoutId: $checkoutId
-      billingAddress: $input
-    ) {
+    checkoutBillingAddressUpdate(id: $checkoutId, billingAddress: $input) {
       errors {
         field
         message
@@ -57,6 +54,8 @@ export const updateBillingAddress = actionClient
       checkoutId,
       input: billingAddress,
     }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error("Failed to update billing address", { error });
       throw BaseError.normalize(error, UnknownError);
     });
 
