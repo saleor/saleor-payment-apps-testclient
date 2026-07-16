@@ -9,7 +9,7 @@ export const env = createEnv({
     PORT: z.coerce.number().optional().default(3001),
   },
   client: {
-    NEXT_PUBLIC_INITIAL_ENV_URL: envUrlSchema,
+    NEXT_PUBLIC_INITIAL_ENV_URL: envUrlSchema.optional(),
     NEXT_PUBLIC_INITIAL_CHANNEL_SLUG: z.string(),
     NEXT_PUBLIC_INITIAL_CHECKOUT_COUNTRY_CODE: z
       .enum(["PL", "SE", "US"])
