@@ -44,7 +44,7 @@
     "lucide-react": "^0.407.0",
     "modern-errors": "^7.0.1",
     "modern-errors-serialize": "^6.1.0",
-    "next": "15.5.18",
+    "next": "15.5.24",
     "next-safe-action": "7.9.3",
     "react": "^18",
     "react-dom": "^18",
